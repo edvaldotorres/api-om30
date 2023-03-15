@@ -38,8 +38,9 @@ services:
     volumes:
       - POSTGRES_VOLUME_EXEMPLO=/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: senha_exemplar_postgres
-      POSTGRES_DB: db_postgres_exemplo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: db_api_om30
       POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - 20000:5432
