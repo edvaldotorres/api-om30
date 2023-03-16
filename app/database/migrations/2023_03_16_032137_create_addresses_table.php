@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained()->onDelete('cascade')->unique();
-            $table->string('cep');
+            $table->string('zip_code');
             $table->string('street');
             $table->string('number')->nullable();
             $table->string('complement')->nullable();

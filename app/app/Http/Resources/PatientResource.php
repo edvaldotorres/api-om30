@@ -22,7 +22,7 @@ class PatientResource extends JsonResource
             'birth_date' => $this->birth_date,
             'cpf' => $this->cpf,
             'cns' => $this->cns,
-            'cep' => $this->address->cep,
+            'zip_code' => $this->address->zip_code,
             'street' => $this->address->street,
             'number' => $this->address->number,
             'complement' => $this->address->complement,

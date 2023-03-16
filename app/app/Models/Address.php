@@ -16,7 +16,7 @@ class Address extends Model
      */
     protected $fillable = [
         'patient_id',
-        'cep',
+        'zip_code',
         'street',
         'number',
         'complement',

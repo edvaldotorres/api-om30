@@ -30,7 +30,7 @@ class PatientRequest extends FormRequest
             'birth_date' => 'required|date_format:d/m/Y',
             'cpf' => 'required|string|min:11|max:11',
             'cns' => 'required|string|min:15|max:15',
-            'cep' => 'required|string|min:8|max:8',
+            'zip_code' => 'required|string|min:8|max:8',
             'street' => 'required|string|min:3|max:255',
             'number' => 'nullable|string',
             'complement' => 'nullable|string',
