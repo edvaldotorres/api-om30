@@ -42,7 +42,8 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        //
+        $patient = Patient::findOrFail($id);
+        return new PatientResource($patient);
     }
 
     /**
@@ -52,9 +53,14 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PatientRequest $request, $id)
     {
-        //
+        $patient = Patient::findOrFail($id);
+
+        $patient->update($request->validated());
+        $patient->address->update($request->validated());
+
+        return new PatientResource($patient);
     }
 
     /**
@@ -65,6 +71,9 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $patient = Patient::findOrFail($id);
+        $patient->delete();
+
+        return response()->json(['message' => 'Patient deleted successfully']);
     }
 }
