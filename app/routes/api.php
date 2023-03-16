@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\ZipCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,5 @@ use App\Http\Controllers\Api\PatientController;
 Route::apiResources([
     'patients' => PatientController::class,
 ]);
+
+Route::get('zipcode', [ZipCodeController::class, 'show']);
