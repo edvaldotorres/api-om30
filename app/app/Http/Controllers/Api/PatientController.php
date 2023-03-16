@@ -15,9 +15,21 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        echo 'index';
+        $patients = Patient::query();
+
+        if ($request->has('name')) {
+            $patients->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->has('document')) {
+            $patients->where('cpf', $request->input('cpf'));
+        }
+    
+        $patients = $patients->paginate(10);
+
+        return PatientResource::collection($patients);
     }
 
     /**
