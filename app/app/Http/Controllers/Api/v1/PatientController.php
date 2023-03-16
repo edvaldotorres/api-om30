@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PatientRequest;
-use App\Http\Resources\PatientResource;
+use App\Http\Requests\v1\PatientRequest;
+use App\Http\Resources\v1\PatientResource;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
