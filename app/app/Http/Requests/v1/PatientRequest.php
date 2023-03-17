@@ -2,20 +2,8 @@
 
 namespace App\Http\Requests\v1;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class PatientRequest extends FormRequest
+class PatientRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
