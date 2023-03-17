@@ -7,37 +7,30 @@ use App\Http\Requests\v1\PatientRequest;
 use App\Http\Resources\v1\PatientResource;
 use App\Models\Patient;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class PatientController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * It takes a search term from the request, uses the search method on the Patient model to find all
+     * patients that match the search term, and then returns a JSON response of the PatientResource
+     * collection
+     * 
+     * @param Request request The request object.
+     * 
+     * @return A collection of patients
      */
     public function index(Request $request)
     {
-        $patients = Patient::query();
-
-        if ($request->has('name')) {
-            $patients->where('name', 'ilike', '%' . $request->input('name') . '%');
-        }
-
-        if ($request->has('document')) {
-            $patients->where('cpf', $request->input('cpf'));
-        }
-
-        $patients = $patients->paginate(10);
-
-        return PatientResource::collection($patients);
+        $patients = Patient::search($request->search);
+        return response()->json(PatientResource::collection($patients));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * > We create a new patient and then create a new address for that patient
+     * 
+     * @param PatientRequest request The request object.
+     * 
+     * @return A new PatientResource
      */
     public function store(PatientRequest $request)
     {
@@ -55,13 +48,7 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        $patient = Patient::find($id);
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Patient not found',
-            ], Response::HTTP_NOT_FOUND);
-        }
-
+        $patient = Patient::findOrFail($id);
         return new PatientResource($patient);
     }
 
@@ -74,12 +61,7 @@ class PatientController extends Controller
      */
     public function update(PatientRequest $request, $id)
     {
-        $patient = Patient::find($id);
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Patient not found',
-            ], Response::HTTP_NOT_FOUND);
-        }
+        $patient = Patient::findOrFail($id);
 
         $patient->update($request->validated());
         $patient->address->update($request->validated());
@@ -95,14 +77,9 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        $patient = Patient::find($id);
-        if (!$patient) {
-            return response()->json([
-                'message' => 'Patient not found',
-            ], Response::HTTP_NOT_FOUND);
-        }
-
+        $patient = Patient::findOrFail($id);
         $patient->delete();
+        
         return response()->noContent();
     }
 }

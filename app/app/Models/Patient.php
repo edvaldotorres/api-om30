@@ -34,8 +34,28 @@ class Patient extends Model
         'address',
     ];
 
+    /**
+     * A user has one address.
+     * 
+     * @return A single address record.
+     */
     public function address()
     {
         return $this->hasOne(Address::class);
+    }
+
+    /**
+     * It searches for a given term in the name and cpf fields of the database, and returns the results
+     * paginated
+     * 
+     * @param searchTerm The search term that the user typed in the search box.
+     * 
+     * @return object A collection of objects
+     */
+    public static function search($searchTerm): object
+    {
+        return self::where('name', 'like', "%{$searchTerm}%")
+            ->orWhere('cpf', 'like', "%{$searchTerm}%")
+            ->paginate(10);
     }
 }
