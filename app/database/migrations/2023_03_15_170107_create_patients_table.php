@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('mother_name');
             $table->date('birth_date');
-            $table->string('cpf');
-            $table->string('cns');
+            $table->string('cpf')->unique();
+            $table->string('cns')->unique()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
