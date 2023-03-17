@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\v1;
 
+use App\Rules\v1\CnsValidation1Rule;
+use App\Rules\v1\CnsValidation2Rule;
+
 class PatientRequest extends BaseRequest
 {
     /**
@@ -17,7 +20,7 @@ class PatientRequest extends BaseRequest
             'mother_name' => 'required|string|min:3|max:255',
             'birth_date' => 'required|date_format:d/m/Y',
             'cpf' => 'required|string|min:11|max:11',
-            'cns' => 'required|string|min:15|max:15',
+            'cns' => ['required', 'string', new CnsValidation1Rule(), new CnsValidation2Rule()],
             'zip_code' => 'required|string|min:8|max:8',
             'street' => 'required|string|min:3|max:255',
             'number' => 'nullable|string',
