@@ -21,11 +21,8 @@ class ZipCodeService
 
         $response = Redis::get($code);
         if ($response !== null) {
-            echo 1;
             return json_decode($response);
         }
-
-        echo 2;
 
         $url = 'https://viacep.com.br/ws/' . $code . '/json';
 
@@ -35,7 +32,7 @@ class ZipCodeService
             throw new Exception('Error fetching zip code data');
         }
 
-        Redis::setex($code, 20, $response);
+        Redis::setex($code, 3600, $response);
 
         return json_decode($response);
     }
