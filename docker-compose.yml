@@ -1,42 +1,33 @@
 version: "3.9"
 services:
-  #aplicação web (PHP+NGINX)
+  # Serviço de aplicação web (PHP+NGINX)
   web:
     image: urnau/php-community:8.0.19-fpm-nginx
     # image: urnau/php-community:latest
-    # utilizado quando vamos contruir uma nova imagem
-    build: 
+    # Usado para construir uma nova imagem
+    build:
       context: .
       dockerfile: ./Dockerfile
     networks:
-      - net_principal
+      - principal
     volumes:
       - ./app/:/var/www/app/
       - ./docker/nginx/sites:/etc/nginx/sites-available
     ports:
-      - "80:80" #http
-      - "443:443" #https
-      - "8080:8080"
-      - "8081:8081"
-      - "8082:8082"
-      - "8083:8083"
-      - "8084:8084"
-      - "8085:8085"
-      - "8086:8086"
-      - "8087:8087"
-      - "8088:8088"
-      - "8089:8089"
+      - "80:80" #HTTP
+      - "443:443" #HTTPS
     depends_on:
       - postgres
       - redis
-  # aplicação Postgres
+
+  # Serviço de aplicação Postgres
   postgres:
     image: postgres:14.3-alpine
     restart: always
     networks:
-      - net_principal
+      - principal
     volumes:
-      - POSTGRES_VOLUME_EXEMPLO=/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
@@ -44,17 +35,18 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - 20000:5432
-  # aplicação Redis
+
+  # Serviço de aplicação Redis
   redis:
     image: redis:7-alpine
     restart: always
     networks:
-      - net_principal
+      - principal
     ports:
       - 6379:6379
 
 networks:
-  net_principal:
+  principal:
 
 volumes:
-  POSTGRES_VOLUME_EXEMPLO:
+  postgres-data:
