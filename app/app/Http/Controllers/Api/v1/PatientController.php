@@ -7,6 +7,7 @@ use App\Http\Requests\v1\PatientRequest;
 use App\Http\Resources\v1\PatientResource;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PatientController extends Controller
 {
@@ -20,13 +21,13 @@ class PatientController extends Controller
         $patients = Patient::query();
 
         if ($request->has('name')) {
-            $patients->where('name', 'like', '%' . $request->input('name') . '%');
+            $patients->where('name', 'ilike', '%' . $request->input('name') . '%');
         }
 
         if ($request->has('document')) {
             $patients->where('cpf', $request->input('cpf'));
         }
-    
+
         $patients = $patients->paginate(10);
 
         return PatientResource::collection($patients);
@@ -54,7 +55,13 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        $patient = Patient::findOrFail($id);
+        $patient = Patient::find($id);
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
         return new PatientResource($patient);
     }
 
@@ -67,7 +74,12 @@ class PatientController extends Controller
      */
     public function update(PatientRequest $request, $id)
     {
-        $patient = Patient::findOrFail($id);
+        $patient = Patient::find($id);
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
 
         $patient->update($request->validated());
         $patient->address->update($request->validated());
@@ -83,9 +95,14 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        $patient = Patient::findOrFail($id);
-        $patient->delete();
+        $patient = Patient::find($id);
+        if (!$patient) {
+            return response()->json([
+                'message' => 'Patient not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
 
-        return response()->json(['message' => 'Patient deleted successfully']);
+        $patient->delete();
+        return response()->noContent();
     }
 }
