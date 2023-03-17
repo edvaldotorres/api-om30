@@ -24,18 +24,15 @@ class JWTToken
         } catch (\Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
                 return response()->json([
-                    'status' => 'error',
-                    'messenge' => 'Token inválido.',
+                    'message' => 'Invalid token.',
                 ], Response::HTTP_UNAUTHORIZED);
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
                 return response()->json([
-                    'status' => 'error',
-                    'messenge' => 'Token ixpirado.',
+                    'message' => 'Token has expired.',
                 ], Response::HTTP_UNAUTHORIZED);
             } else {
                 return response()->json([
-                    'status' => 'error',
-                    'messenge' => 'Token de autorização não encontrado.',
+                    'message' => 'Authorization token not found.',
                 ], Response::HTTP_UNAUTHORIZED);
             }
         }
