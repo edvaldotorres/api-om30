@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1;
 
+use App\Helpers\HelperGeneral;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PatientResource extends JsonResource
@@ -20,7 +21,7 @@ class PatientResource extends JsonResource
             'name' => $this->name,
             'mother_name' => $this->mother_name,
             'birth_date' => $this->birth_date,
-            'cpf' => $this->cpf,
+            'cpf' => HelperGeneral::formatterCpf($this->cpf),
             'cns' => $this->cns,
             'zip_code' => $this->address->zip_code,
             'street' => $this->address->street,
