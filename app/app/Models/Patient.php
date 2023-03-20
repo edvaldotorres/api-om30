@@ -58,4 +58,27 @@ class Patient extends Model
             ->orWhere('cpf', 'like', "%{$searchTerm}%")
             ->paginate(10);
     }
+
+    /**
+     * > The `getBirthDateAttribute` function is called when you try to access the `birth_date` attribute
+     * of a `User` object
+     * 
+     * @param value The value of the attribute.
+     * 
+     * @return The birth date of the user.
+     */
+    public function getBirthDateAttribute($value)
+    {
+        return date('d/m/Y', strtotime($value));
+    }
+
+    /**
+     * > The `setBirthDateAttribute` function is called when the `birth_date` attribute is set
+     * 
+     * @param value The value of the attribute.
+     */
+    public function setBirthDateAttribute($value)
+    {
+        $this->attributes['birth_date'] = date('Y-m-d', strtotime($value));
+    }
 }
