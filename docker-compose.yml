@@ -1,0 +1,64 @@
+version: "3.9"
+services:
+  # Serviço de aplicação web (PHP+NGINX)
+  web:
+    image: urnau/php-community:8.0.19-fpm-nginx
+    # image: urnau/php-community:latest
+    # Usado para construir uma nova imagem
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    networks:
+      - principal
+    volumes:
+      - ./app/:/var/www/app/
+      - ./docker/nginx/sites:/etc/nginx/sites-available
+    ports:
+      - "80:80" #HTTP
+      - "443:443" #HTTPS
+    depends_on:
+      - postgres
+      - redis
+
+  # Serviço de aplicação Postgres
+  postgres:
+    image: postgres:14.3-alpine
+    restart: always
+    networks:
+      - principal
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: db_api_om30
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 20000:5432
+
+  # Serviço de aplicação Redis
+  redis:
+    image: redis:7-alpine
+    restart: always
+    networks:
+      - principal
+    ports:
+      - 6379:6379
+    
+  # supervisor:
+  #   image: web
+  #   container_name: supervisor-test
+  #   depends_on:
+  #     - web
+  #   command: supervisord
+  #   volumes:
+  #     - ./app/:/var/www/app/
+  #     - ./docker/supervisor/laravel.conf:/etc/supervisor/conf.d/laravel.conf
+  #   networks:
+  #     - principal
+
+networks:
+  principal:
+
+volumes:
+  postgres-data:
