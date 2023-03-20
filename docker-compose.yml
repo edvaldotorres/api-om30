@@ -44,6 +44,18 @@ services:
       - principal
     ports:
       - 6379:6379
+    
+  # supervisor:
+  #   image: web
+  #   container_name: supervisor-test
+  #   depends_on:
+  #     - web
+  #   command: supervisord
+  #   volumes:
+  #     - ./app/:/var/www/app/
+  #     - ./docker/supervisor/laravel.conf:/etc/supervisor/conf.d/laravel.conf
+  #   networks:
+  #     - principal
 
 networks:
   principal:
