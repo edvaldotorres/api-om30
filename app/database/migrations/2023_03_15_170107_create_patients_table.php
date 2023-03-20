@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('image')->nullable();
             $table->string('name');
-            $table->string('mother_name');
+            $table->string('mother_name')->nullable();
             $table->date('birth_date');
             $table->string('cpf')->unique();
             $table->string('cns')->unique()->nullable();
