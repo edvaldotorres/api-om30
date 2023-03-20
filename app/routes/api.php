@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
     /* This is a route group that uses the `jwt.api` middleware. This middleware is responsible for
     verifying the token sent by the user. If the token is valid, the user will be able to access the
     routes inside the group. */
+    Route::post('/patients/import', [PatientController::class, 'import']);
     Route::middleware('jwt.api')->group(function () {
         Route::apiResource('patients', PatientController::class)->only([
             'index', 'store', 'show', 'update', 'destroy'
