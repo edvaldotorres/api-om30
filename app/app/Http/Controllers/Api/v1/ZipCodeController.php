@@ -12,11 +12,24 @@ class ZipCodeController extends Controller
 {
     private $zipCodeService;
 
+    /**
+     * > The constructor function is used to create a new instance of the ZipCodeController class
+     * 
+     * @param ZipCodeService zipCodeService This is the service that we're injecting into the controller.
+     */
     public function __construct(ZipCodeService $zipCodeService)
     {
         $this->zipCodeService = $zipCodeService;
     }
 
+    /**
+     * It returns a JSON response with the zip code data if the zip code is valid, or an error message if
+     * it's not
+     * 
+     * @param string code The zip code to fetch data for
+     * 
+     * @return A JSON response with the zip code data or an error message.
+     */
     public function getZipCode(string $code)
     {
         try {

@@ -11,9 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthController extends Controller
 {
     /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\Response
+     * It attempts to authenticate the user using the email and password provided in the request, and if it
+     * succeeds, it returns a new AuthResource instance with the user and the token
+     * 
+     * @param AuthRequest request The request object.
+     * 
+     * @return A new AuthResource instance.
      */
     public function login(AuthRequest $request)
     {
@@ -28,9 +31,11 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
-     *
-    //  * @return \Illuminate\Http\JsonResponse
+     * > It creates a new user, logs them in, and returns a resource with the user and their token
+     * 
+     * @param AuthRequest request The request object.
+     * 
+     * @return A new AuthResource with the user and token.
      */
     public function register(AuthRequest $request)
     {
@@ -38,15 +43,5 @@ class AuthController extends Controller
         $token = auth('api')->login($user);
 
         return new AuthResource($user, $token);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-    //  * @return \Illuminate\Http\Response
-     */
-    public function me()
-    {
-        //
     }
 }
