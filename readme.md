@@ -41,7 +41,7 @@ NOTE: This may take a while if this is the first time installing this as a conta
 docker exec -it api-om30_web_1 /bin/bash
 ```
 
-NOTE: Configure your database in the .env file
+NOTE: Create your database according to docker-compose.yml file
 
 ```sh
 cd app
