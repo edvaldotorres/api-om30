@@ -47,6 +47,10 @@ NOTE: Configure your database in the .env file
 cd app
 ```
 
+```sh
+composer install
+```
+
 5. Build the migrate.
 
 ```sh
