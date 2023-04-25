@@ -38,10 +38,10 @@ NOTE: This may take a while if this is the first time installing this as a conta
 4. Install the dependencies
 
 ```sh
-docker exec -it api-om30_web_1 /bin/bash
+docker exec -it (container) /bin/bash
 ```
 
-NOTE: Configure your database in the .env file
+NOTE: Create your database according to docker-compose.yml file
 
 ```sh
 cd app
